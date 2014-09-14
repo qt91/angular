@@ -1,0 +1,24 @@
+<div class="col-md-6 col-md-offset-3" ng-controller="customerController">
+	<form action="" role="form">
+		<div class="form-group">
+			<lable for="txtSearch">Từ khóa tìm kiếm</lable>
+			<input ng-model="mSearch" type="text" placeholder="Từ khóa" class="form-control" id="txtSearch">
+		</div>
+		<div class="form-group">
+		<button type="submit" class="btn btn-deafult">Search</button>
+		</div>
+	</form>	
+	<p>{{ mSearch }}</p>
+	<table class="table table-striped">
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Age</th>
+		</tr>
+		<tr  ng-animate="'animate'" ng-repeat="cust in customer | filter:mSearch">
+			<td>{{cust.id}}</td>
+			<td>{{cust.name}}</td>
+			<td>{{cust.age}}</td>
+		</tr>
+	</table>
+</div>

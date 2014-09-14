@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="customerApp">
+<head>
+	<meta charset="UTF-8">
+		<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<title>Learn Augularjs, Write example search</title>
+</head>
+<body>
+
+<div class="container">
+	<div class="row">
+		<div ng-view>
+			
+		</div>
+		
+	</div>
+
+</div>
+
+<script src="js/angular.js"></script>
+<script src="js/angular-route.js"></script>
+<script src="js/angular-animate.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+	var app = angular.module('customerApp',['ngRoute']);
+
+	app.config(function($routeProvider){
+		$routeProvider.when('/',{
+			controller: 'customerController',
+			templateUrl: 'app/views/customer.html'
+		}).when('/orders',{
+			controller: 'ordersController',
+			templateUrl: 'app/views/orders.html'
+		});
+	});
+
+	app.controller('orders', function($scope){
+		$scope.customerID = 5;
+	});
+
+	app.controller('customerController', function($scope, customerFactory){
+		function init(){
+			customerFactory.getCustomer().success(function(data){
+				$scope.customer = data;
+			});
+		};
+
+		init();
+	});
+
+	app.factory('customerFactory', function($http){
+		var factory = {};
+		factory.getCustomer = function(){
+			return $http.get('customer.json');
+		};
+		return factory;
+	});
+
+</script>
+</body>
+</html>
